@@ -1,10 +1,11 @@
-[package]
-name = "rust-lib"
-version = "0.1.0"
-edition = "2021"
+[workspace]
+members = ["client-expand", "host-expand", "client-expand-rs"]
+resolver = "1"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
-log = "0.4.17"
-custom-utils = "0.10.14"
+[workspace.dependencies]
+wasmtime = { version = "12.0.1", features = ["component-model"] }
+log = "0.4.20"
+custom-utils = "0.10.15"
+anyhow = "1.0.75"
+tokio = {version = "1.32.0", features = ["full"]}
