@@ -9,7 +9,10 @@ log = "0.4.20"
 custom-utils = "0.10.15"
 anyhow = "1.0.75"
 tokio = {version = "1.32.0", features = ["full"]}
-
+wit-bindgen = "=0.14.0"
 [patch.crates-io]
 #wit-parser = {path = "../wasm-tools/crates/wit-parser"}
 wit-parser = {git ="https://github.com/jm-observer/wasm-tools.git"}
+
+[patch."https://github.com/jm-observer/wit-bindgen.git"]
+wit-bindgen-rust-macro = { path = "../wit-bindgen/crates/rust-macro"}

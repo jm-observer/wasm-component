@@ -12,6 +12,11 @@ crate-type = ["cdylib"]
 log = { workspace = true }
 custom-utils = { workspace = true }
 anyhow = { workspace = true }
-#wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", version = "0.13.1" }
+wit-bindgen = { workspace = true }
 wit-bindgen-rust-macro = {git = "https://github.com/jm-observer/wit-bindgen.git"}
 syn = "2.0.29"
+quote = "1.0.33"
+
+prettyplease = "0.2.12"
+[dev-dependencies]
+custom-utils = "0.10.15"

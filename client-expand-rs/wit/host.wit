@@ -1,8 +1,8 @@
 // wit/host.wit
-package example:host
+package example:host;
 
 world host {
-  import print: func(msg: string)
+  import print: func(msg: string);
 
-  export run: func()
+  export run: func();
 }
