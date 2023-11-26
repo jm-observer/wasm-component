@@ -1,0 +1,6 @@
+// wit/host.wit
+package example:host;
+
+world host {
+    export run: func(bytes: list<u8>) -> result<option<string>, u8>;
+}

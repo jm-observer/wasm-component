@@ -1,0 +1,15 @@
+[package]
+name = "wasmtime-component-macro-fork"
+version = "15.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0"
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = { workspace = true, features = ["extra-traits"] }
+wasmtime-component-util = { workspace = true }
+wasmtime-wit-bindgen = { workspace = true }
+wit-parser = { workspace = true }

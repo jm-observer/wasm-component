@@ -1,26 +1,16 @@
 use quote::quote;
-use wit_bindgen_rust_macro_fork::Config;
+use wasmtime_component_macro_fork::bindgen::{expand, Config};
 
 fn main() {
     let src = quote! {
             {
-        // the name of the world in the `*.wit` input file
-        world: "host",
                 path: "../wit/host.wit",
-
-        // For all exported worlds, interfaces, and resources, this specifies what
-        // type they're corresponding to in this module. In this case the `MyHost`
-        // struct defined below is going to define the exports of the `world`,
-        // namely the `run` function.
-        exports: {
-            world: MyHost,
-        },
     }
         };
     match syn::parse2::<Config>(src) {
         Ok(conf) => {
             println!("{:?}", conf);
-            let token = conf.expand().unwrap();
+            let token = expand(&conf).unwrap();
             let file_header = "\u{feff}";
             let file_code =
                 format!("{}{}", file_header, token.to_string());
