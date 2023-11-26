@@ -1,9 +1,6 @@
-# rust-lib
 
-client-expand-rs(cargo-expand出来的代码)不对，无法编译
-```
-cargo build --target wasm32-wasi --release --package client-expand
-wasm-tools component new ./target/wasm32-wasi/release/client_expand.wasm -o client-expand.wasm --adapt ./wasi_snapshot_preview1.reactor.wasm
-```
+# 其他
+
+1. wasi_snapshot_preview1.reactor.15.0.0.wasm必须与wasmtime对应，须到对应的页面[下载](https://github.com/bytecodealliance/wasmtime/releases/tag/v15.0.0)
 
 

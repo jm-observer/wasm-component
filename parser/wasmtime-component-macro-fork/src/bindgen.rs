@@ -207,9 +207,10 @@ fn parse_source(
         None
     };
 
-    let pkg = inline_pkg
-        .or(path_pkg)
-        .map_or_else(|| parse(&mut resolve, &root.join("wit")), Ok)?;
+    let pkg = inline_pkg.or(path_pkg).map_or_else(
+        || parse(&mut resolve, &root.join("../../../wit")),
+        Ok
+    )?;
 
     Ok((resolve, pkg, files))
 }

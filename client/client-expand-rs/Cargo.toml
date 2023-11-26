@@ -3,20 +3,13 @@ name = "client-expand-rs"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[lib]
-crate-type = ["cdylib"]
-
 
 [dependencies]
 log = { workspace = true }
 custom-utils = { workspace = true }
 anyhow = { workspace = true }
 wit-bindgen = { workspace = true }
-wit-bindgen-rust-macro-fork = { path = "../wit-bindgen-rust-macro-fork"}
+wit-bindgen-rust-macro-fork = { path = "../../parser/wit-bindgen-rust-macro-fork" }
 syn = "2.0.29"
 quote = "1.0.33"
-
 prettyplease = "0.2.12"
-[dev-dependencies]
-custom-utils = "0.10.15"

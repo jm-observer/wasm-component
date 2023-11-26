@@ -171,7 +171,7 @@ fn parse_source(
             UnresolvedPackage::parse("macro-input".as_ref(), s)?
         )?,
         Some(Source::Path(s)) => parse(&root.join(s))?,
-        None => parse(&root.join("wit"))?
+        None => parse(&root.join("../../../wit"))?
     };
 
     Ok((resolve, pkg, files))

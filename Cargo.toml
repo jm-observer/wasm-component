@@ -1,10 +1,14 @@
 [workspace]
-members = ["client-expand", "host-expand", "client-expand-rs", "host-expand-rs", "wasmtime-component-macro-fork", "wit-bindgen-rust-macro-fork"]
+members = [
+    "client/client-host", "client/client-expand-rs", "client/client-host-simple"
+    , "host/host-expand-rs"
+    , "parser/wasmtime-component-macro-fork", "parser/wit-bindgen-rust-macro-fork"
+    ]
 resolver = "1"
 
 
 [workspace.dependencies]
-wasmtime = { version = "15.0.0", features = ["component-model"] }
+wasmtime = { version = "=15.0.0", features = ["component-model"] }
 log = "0.4.20"
 custom-utils = "0.10.15"
 anyhow = "1.0.75"
@@ -12,8 +16,9 @@ tokio = {version = "1.32.0", features = ["full"]}
 wit-bindgen = "=0.14.0"
 syn = {version = "2.0.29"}
 wit-parser = "0.13.0"
-wasmtime-wit-bindgen = "15.0.0"
-wasmtime-component-util = "15.0.0"
+wasmtime-wit-bindgen = "=15.0.0"
+wasmtime-component-util = "=15.0.0"
+wasmtime-wasi = "=15.0.0"
 
 [patch.crates-io]
 #wit-parser = {path = "../wasm-tools/crates/wit-parser"}

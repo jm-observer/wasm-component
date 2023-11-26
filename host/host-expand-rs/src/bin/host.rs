@@ -2,9 +2,14 @@ use wasmtime::{
     component::{Component, Linker},
     Config, Engine, Store
 };
+use wasmtime_wasi::preview2::{
+    pipe::MemoryOutputPipe, Table, WasiCtx, WasiCtxBuilder, WasiView
+};
 
-struct MyState;
-
+/**
+cargo build --target wasm32-wasi --release --package client-host
+wasm-tools component new .\target\wasm32-wasi\release\client_host.wasm -o client-host.wasm --adapt ./wasi_snapshot_preview1.reactor.15.0.0.wasm
+**/
 fn main() -> wasmtime::Result<()> {
     // Configure an `Engine` and compile the `Component` that is being
     // run for the application.
@@ -12,7 +17,7 @@ fn main() -> wasmtime::Result<()> {
     config.wasm_component_model(true);
     let engine = Engine::new(&config)?;
     let component =
-        Component::from_file(&engine, "./client_expand_rs.wasm")?;
+        Component::from_file(&engine, "client-host.wasm")?;
 
     // Instantiation of bindings always happens through a `Linker`.
     // Configuration of the linker is done through a generated
@@ -33,7 +38,21 @@ fn main() -> wasmtime::Result<()> {
     // linker. This returns the `bindings` structure which is an
     // instance of `HelloWorld` and supports typed access
     // to the exports of the component.
-    let mut store = Store::new(&engine, MyState);
+    let stdout = MemoryOutputPipe::new(4096);
+    let stderr = MemoryOutputPipe::new(4096);
+    let mut builder = WasiCtxBuilder::new();
+    builder.stdout(stdout.clone()).stderr(stderr.clone());
+
+    let mut store = Store::new(
+        &engine,
+        MyState {
+            table: Table::new(),
+            wasi:  builder.build()
+        }
+    );
+    wasmtime_wasi::preview2::command::sync::add_to_linker(
+        &mut linker
+    )?;
     let (bindings, _) =
         Host_::instantiate(&mut store, &component, &linker)?;
 
@@ -41,15 +60,38 @@ fn main() -> wasmtime::Result<()> {
     // component, but in the Wasmtime embedding API the first
     // argument is always a `Store`.
     // bindings.call_greet(&mut store)?;
-    let _rs = bindings.call_run(&mut store, "abc".as_bytes())?;
+    let rs = bindings.call_run(&mut store, "abc".as_bytes())?;
+    println!("{:?}", rs);
     Ok(())
+}
+
+struct MyState {
+    table: Table,
+    wasi:  WasiCtx
+}
+
+impl WasiView for MyState {
+    fn table(&self) -> &Table {
+        &self.table
+    }
+
+    fn table_mut(&mut self) -> &mut Table {
+        &mut self.table
+    }
+
+    fn ctx(&self) -> &WasiCtx {
+        &self.wasi
+    }
+
+    fn ctx_mut(&mut self) -> &mut WasiCtx {
+        &mut self.wasi
+    }
 }
 
 pub struct Host_ {
     run: wasmtime::component::Func
 }
 const _: () = {
-    use wasmtime::component::__internal::anyhow;
     impl Host_ {
         /// Instantiates the provided `module` using the specified
         /// parameters, wrapping up the result in a structure that

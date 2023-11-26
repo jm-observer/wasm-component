@@ -113,6 +113,6 @@ impl Guest for MyHost {
                 println!("{}", x);
                 8
             })
-            .map(|x| Some(x))
+            .map(|x| Some(x.to_uppercase()))
     }
 }

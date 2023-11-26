@@ -1,5 +1,5 @@
 [package]
-name = "client-expand"
+name = "host-expand-rs"
 version = "0.1.0"
 edition = "2021"
 
@@ -12,5 +12,11 @@ crate-type = ["cdylib"]
 log = { workspace = true }
 custom-utils = { workspace = true }
 anyhow = { workspace = true }
-#wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", version = "0.14" }
-wit-bindgen = { workspace = true }
+wasmtime = { workspace = true }
+wasmtime-wasi = { workspace = true }
+prettyplease = "0.2.12"
+wasmtime-component-macro-fork = {path = "../../parser/wasmtime-component-macro-fork" }
+quote = "1.0.33"
+syn = "2.0.29"
+[dev-dependencies]
+custom-utils = "0.10.15"

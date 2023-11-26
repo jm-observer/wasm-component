@@ -1,5 +1,3 @@
-use syn::{parse_macro_input, DeriveInput, Error};
-
 pub mod bindgen;
 pub mod component;
 //
