@@ -4,7 +4,7 @@ use wasmtime_component_macro_fork::bindgen::{expand, Config};
 fn main() {
     let src = quote! {
             {
-                path: "../../wit/host.wit",
+                path: "../../wit/sensor.wit",
     }
         };
     match syn::parse2::<Config>(src) {
